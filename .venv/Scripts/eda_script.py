@@ -1,5 +1,6 @@
 import seaborn as sns
 from clean_data import df
+import numpy as np
 import matplotlib.pyplot as plt
 
 #pairplot for two variables 
@@ -33,4 +34,17 @@ for index, column in enumerate(df.columns):
 
 plt.suptitle("Traffic Dataset Histograms", size=24, y=1.02)
 plt.tight_layout(rect=[0,0,1,0.98])
+plt.show()
+
+#code for 3-D Scatterplot
+fig = plt.figure(figsize=(12,10))
+ax = fig.add_subplot(projection="3d")
+colors = np.random.rand(len(df))
+scatter = ax.scatter(df['CarCount'], df['BikeCount'], df['BusCount'],
+                     c=colors, cmap='hsv', s=100, alpha=0.7)
+
+fig.colorbar(scatter)
+ax.set_title("3-D Scatterplot with major vehicles")
+ax.set_xlabel("Cars")
+ax.set_ylabel("Bike")
 plt.show
