@@ -2,6 +2,7 @@ import seaborn as sns
 from clean_data import df
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 #pairplot for two variables 
 car_to_bike = sns.pairplot(df, vars=["CarCount", "BikeCount"],hue="Total")
@@ -57,3 +58,14 @@ plt.figure(figsize=(10,5))
 sns.histplot(data=df, x="Day of the week",
                     hue="Traffic Situation", palette="magma", stat="count", kde=True)
 
+vehicle_df = {
+                           "CarCount" : [sum(df["CarCount"])],
+                            "BikeCount" : [sum(df["BikeCount"])],
+                            "BusCount" : [sum(df["BusCount"])],
+                            "TruckCount" : [sum(df["TruckCount"])],
+                    }
+vehicle_table = pd.DataFrame(data = vehicle_df)
+vehicle_table
+
+plt.figure(figsize=(10,5))
+sns.histplot(data=vehicle_table) 
