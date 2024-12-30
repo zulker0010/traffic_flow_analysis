@@ -58,14 +58,12 @@ plt.figure(figsize=(10,5))
 sns.histplot(data=df, x="Day of the week",
                     hue="Traffic Situation", palette="magma", stat="count", kde=True)
 
-vehicle_df = {
-                           "CarCount" : [sum(df["CarCount"])],
-                            "BikeCount" : [sum(df["BikeCount"])],
-                            "BusCount" : [sum(df["BusCount"])],
-                            "TruckCount" : [sum(df["TruckCount"])],
-                    }
+vehicle_df = pd.DataFrame([
+                            sum(df["CarCount"]),
+                            sum(df["BikeCount"]),
+                            sum(df["BusCount"]),
+                            sum(df["BusCount"])],
+                            index=["CarCount", "BikeCount", "BusCount", "TruckCount"],
+                            columns=["VehicleCount",])
 vehicle_table = pd.DataFrame(data = vehicle_df)
 vehicle_table
-
-plt.figure(figsize=(10,5))
-sns.histplot(data=vehicle_table) 
