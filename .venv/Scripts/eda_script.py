@@ -51,3 +51,9 @@ plt.show
 
 df.info
 df.describe
+
+#traffic situation on each day of the week
+plt.figure(figsize=(10,5))
+sns.histplot(data=df, x="Day of the week",
+                    hue="Traffic Situation", palette="magma", stat="count", kde=True)
+
