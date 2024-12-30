@@ -48,3 +48,6 @@ ax.set_title("3-D Scatterplot with major vehicles")
 ax.set_xlabel("Cars")
 ax.set_ylabel("Bike")
 plt.show
+
+df.info
+df.describe
