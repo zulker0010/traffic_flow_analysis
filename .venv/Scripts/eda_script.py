@@ -18,25 +18,6 @@ sns.pairplot(df, vars=["CarCount","BikeCount", "BusCount", "TruckCount", "Total"
                                  plot_kws={"alpha":0.6}
             )
 
-#histogram of vehicles
-fig,axes = plt.subplots(nrows=3, ncols=2, figsize={(20,20)})
-colors = ['##491D8B', '#6929C4', '#8A3FFC', 
-          '#A56EFF', '#7D3AC1', '#AF4BCE',]
-
-for index, column in enumerate(df.columns):
-    if index<6:
-        ax = axes.flatten()[index]
-        ax.hist(df[column], colors = colors[index], bins=20, edgecolor = "black", alpha = 0.7, label = column)
-        ax.legend(loc="best", fontsize = 12)
-        ax.set_title(f"Distribution of {column}", fontsize=14)
-        ax.set_xlabel(column, fontsize = 12)
-        ax.set_ylabel("Frequency", fontsize = 12)
-        ax.grid(True, linestyle="--", alpha = 0.6)
-
-plt.suptitle("Traffic Dataset Histograms", size=24, y=1.02)
-plt.tight_layout(rect=[0,0,1,0.98])
-plt.show()
-
 #code for 3-D Scatterplot
 fig = plt.figure(figsize=(12,10))
 ax = fig.add_subplot(projection="3d")
@@ -58,12 +39,15 @@ plt.figure(figsize=(10,5))
 sns.histplot(data=df, x="Day of the week",
                     hue="Traffic Situation", palette="magma", stat="count", kde=True)
 
-vehicle_df = pd.DataFrame([
-                            sum(df["CarCount"]),
-                            sum(df["BikeCount"]),
-                            sum(df["BusCount"]),
-                            sum(df["BusCount"])],
-                            index=["CarCount", "BikeCount", "BusCount", "TruckCount"],
-                            columns=["VehicleCount",])
-vehicle_table = pd.DataFrame(data = vehicle_df)
-vehicle_table
+vehicle_table = {'vehicles': ["Cars", "Bikes", "Buses", "Trucks"], 
+                          'Number of Vehicles': pd.Series([sum(df["CarCount"]),
+                                                    sum(df["BikeCount"]),
+                                                    sum(df["BusCount"]),
+                                                    sum(df["TruckCount"])],
+                                                    index=[0,1,2,3]
+                                                    )
+                        }
+
+vehicle_df = pd.DataFrame(data=vehicle_table, index=[0,1,2,3])
+plt.figure(figsize=(10,5))
+sns.histplot(data=vehicle_df, x="vehicles", y="Number of Vehicles", hue="Number of Vehicles")
