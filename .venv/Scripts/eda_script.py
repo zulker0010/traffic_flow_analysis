@@ -1,6 +1,7 @@
 import seaborn as sns
 from clean_data import df
 import numpy as np
+import matplotlib.dates as mpl
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -51,3 +52,20 @@ vehicle_table = {'vehicles': ["Cars", "Bikes", "Buses", "Trucks"],
 vehicle_df = pd.DataFrame(data=vehicle_table, index=[0,1,2,3])
 plt.figure(figsize=(10,5))
 sns.histplot(data=vehicle_df, x="vehicles", y="Number of Vehicles", hue="Number of Vehicles")
+
+#kernel density estimation for vehicle distribution
+for col in 'xy':
+ sns.kdeplot(data=vehicle_df["Number of Vehicles"], shade=True)
+
+ #time series analysis showing traffic throughout the hours of the day
+time = pd.to_datetime(df['Time'], format='%H:%M:%S', exact=False)
+count = df['Total']
+
+fig, ax = plt.subplots(figsize=(25,25))
+plt.plot_date(time, count, linestyle='solid')
+plt.gcf().autofmt_xdate()
+time_format = mpl.DateFormatter('%H:%M:%S')
+plt.gca().xaxis.set_major_formatter(time_format)
+
+ax.set(xlabel='time', ylabel='count', title='Time series analysis of traffic')
+plt.show()
