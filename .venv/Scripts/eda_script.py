@@ -57,6 +57,7 @@ sns.histplot(data=vehicle_df, x="vehicles", y="Number of Vehicles", hue="Number 
 for col in 'xy':
  sns.kdeplot(data=vehicle_df["Number of Vehicles"], shade=True)
 
- #time series analysis showing traffic throughout the hours of the day
- fig, ax = plt.subplots(figsize = (100,10))
-ax.plot(df['Time'], df['Total'])
+#time series table for showing peak traffic hours
+frequency_table = pd.crosstab(df['Time'], df['Total'])
+frequency_table
+df['Time'].value_counts()
