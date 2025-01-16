@@ -61,3 +61,8 @@ for col in 'xy':
 frequency_table = pd.crosstab(df['Time'], df['Total'])
 frequency_table
 df['Time'].value_counts()
+
+df.shape
+df['Day of the week'].unique()
+df['Day of the week'].value_counts(normalize=True)
+df.describe()
