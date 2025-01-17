@@ -66,3 +66,11 @@ df.shape
 df['Day of the week'].unique()
 df['Day of the week'].value_counts(normalize=True)
 df.describe()
+
+#converting  time into hours by extracting the hours
+df['Hour'] = pd.to_datetime(df['Time'], format='%I:%M:%S %p').dt.hour
+df['Hour']
+
+vehicle_columns = ['CarCount', 'BikeCount', 'BusCount', 'TruckCount', 'Total']
+hourly_data = df.groupby('Hour')[vehicle_columns].sum
+sns.lineplot(x=hourly_data.index)
