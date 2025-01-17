@@ -69,8 +69,13 @@ df.describe()
 
 #converting  time into hours by extracting the hours
 df['Hour'] = pd.to_datetime(df['Time'], format='%I:%M:%S %p').dt.hour
-df['Hour']
 
 vehicle_columns = ['CarCount', 'BikeCount', 'BusCount', 'TruckCount', 'Total']
-hourly_data = df.groupby('Hour')[vehicle_columns].sum
-sns.lineplot(x=hourly_data.index)
+hourly_data = df.groupby('Hour')[vehicle_columns].sum()
+
+fig, axes = plt.subplot(5,figsize = (10,8), sharex = True)
+sns.lineplot(x=hourly_data.index, 
+             y=hourly_data['Total'], 
+             palette = 'rocket"',
+             marker = 'o'
+             )
