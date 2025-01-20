@@ -70,12 +70,64 @@ df.describe()
 #converting  time into hours by extracting the hours
 df['Hour'] = pd.to_datetime(df['Time'], format='%I:%M:%S %p').dt.hour
 
+#grouping individual and total vehicle count by the hour
 vehicle_columns = ['CarCount', 'BikeCount', 'BusCount', 'TruckCount', 'Total']
 hourly_data = df.groupby('Hour')[vehicle_columns].sum()
 
-fig, axes = plt.subplot(5,figsize = (10,8), sharex = True)
-sns.lineplot(x=hourly_data.index, 
+#function for subplotting each vehicle dist in a single plot
+def hourly_vehicle_distribution():
+    fig, axes = plt.subplots(nrows = 5, ncols = 1,figsize = (10,18), sharex = True)
+
+#Total vehicle distribution for 24 hours 
+    sns.lineplot(x=hourly_data.index, 
              y=hourly_data['Total'], 
-             palette = 'rocket"',
-             marker = 'o'
+             palette = 'red',
+             marker = 'o',
+             ax = axes[0]
              )
+
+    axes[0].set_title("Total Vehicle Count by the Hour")
+    axes[0].set_ylabel("Total Number of Vehicles")
+
+#total car distribution for 24 hours
+    sns.lineplot(x=hourly_data.index,
+             y=hourly_data['CarCount'],
+             color = 'orange',
+             marker = 'o',
+             ax = axes[1]
+             )
+
+    axes[1].set_title("Total Car Count by the Hour")
+    axes[1].set_ylabel("Total Number of Cars")
+
+    sns.lineplot(x=hourly_data.index,
+             y=hourly_data['BikeCount'],
+             color = 'blue',
+             marker = 'o',
+             ax = axes[2]
+             )
+
+    axes[2].set_title("Total BikeCount by the Hour")
+    axes[2].set_title("Total Number of Bikes")
+
+    sns.lineplot(x=hourly_data.index,
+             y=hourly_data["BusCount"],
+             color = 'green',
+             marker = 'o',
+             ax = axes[3]
+             )
+
+    axes[3].set_title("Total BusCount by the Hour")
+    axes[3].set_ylabel("Total Number of Buses")
+
+    sns.lineplot(x = hourly_data.index,
+             y = hourly_data['TruckCount'],
+             color = 'brown',
+             marker = 'o',
+             ax = axes[4]
+             )
+
+    axes[4].set_title('Total TruckCount by the Hour')
+    axes[4].set_ylabel('Total Number of Trucks')
+
+hourly_vehicle_distribution()
